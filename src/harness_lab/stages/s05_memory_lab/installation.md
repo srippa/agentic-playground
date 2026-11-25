@@ -10,7 +10,7 @@
 2. **`numpy`:** Fast, dependency-minimal cosine similarity math over locally embedded memory chunks before introducing any heavy vector DB.
 3. **Verify SQLite `ENABLE_FTS5`:** Confirm our Python/macOS SQLite build includes FTS5 full-text indexing.
 4. **Local `embed` + `fast` Role Models (64 GB Co-Residency Verified):**
-   - `embed` role (e.g., `nomic-embed-text` or `qwen3-embedding` — compact embedding weights kept resident alongside `workhorse` / `fast`).
+   - `embed` role (preferred candidate noted during Stage 0: `embeddinggemma-2:270m` — ~350 MB text/code backbone, 8K context, Matryoshka `768d`→`128d`; alternatives: `nomic-embed-text` or `qwen3-embedding`).
    - Optional `fast` summarization/compaction model (e.g., `qwen3.5:9b`, `qwen3:8b`, or ultra-fast `bonsai-2.5` if evaluated for compaction latency/memory trade-offs).
 
 ---
@@ -19,6 +19,7 @@
 
 - SQLite FTS5 Documentation: [https://www.sqlite.org/fts5.html](https://www.sqlite.org/fts5.html)
 - Ollama Embeddings & Model Docs: [https://docs.ollama.com](https://docs.ollama.com)
+- EmbeddingGemma Docs: [https://gemma.ai/models/embeddinggemma/](https://gemma.ai/models/embeddinggemma/)
 - Workspace Reference: `.agents/skills/local-runtime-guard/SKILL.md`
 
 ---
@@ -51,7 +52,7 @@ uv run python -c "import sqlite3; c=sqlite3.connect(':memory:'); opts=[r[0] for 
 ## Decisions & Approval
 
 - **Status:** `pending`
-- **Approved `embed` Model Tag:** *(TBD in Q&A)*
+- **Approved `embed` Model Tag:** *(TBD in Q&A — preferred candidate from Stage 0: `embeddinggemma-2:270m`)*
 - **Approved `fast` Compaction Model Tag:** *(TBD in Q&A)*
 - **User Explicit Approval:** *(waiting for user go-ahead)*
 

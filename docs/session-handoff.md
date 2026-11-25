@@ -2,8 +2,8 @@
 
 - **Last Updated:** 2026-11-25
 - **Workspace:** `agentic-playground` (repository root)
-- **Active Cursor:** `Stage 0 → Gate 1` ([s00_foundations/reading.md](../src/harness_lab/stages/s00_foundations/reading.md))
-- **Current Build State:** Course scaffolding, governance rules, safety hooks/skills, and all stage docs (`s00_foundations/`–`s06_observatory/`) are complete. **No packages or local models have been installed yet, and no Python stage code has been written yet.**
+- **Active Cursor:** `Stage 1 → Gate 1` ([s01_raw_vs_pydantic/reading.md](../src/harness_lab/stages/s01_raw_vs_pydantic/reading.md))
+- **Current Build State:** **Stage 0 is complete and verified.** Installed `uv 0.13.10`, Python `3.13.18`, `Ollama.app 0.40.18` (live-verified `REACHABLE` via `uv run lab doctor --xray`; model pulls intentionally deferred until needed), plus `httpx`, `pydantic`, `rich`, `pytest`, and `ruff`. Implemented `pyproject.toml`, `models.toml`, `models.md`, `config.py`, `cli.py`, `core/tracer.py`, `core/wire_tap.py`, `core/sandbox.py`, and `s00_foundations/run.py` (`31 passed, 1 deselected`, `ruff` clean). ADR [001-runtime-and-wire-tap.md](./decisions/001-runtime-and-wire-tap.md) is `accepted`.
 
 ---
 
@@ -81,13 +81,11 @@ All `reading.md` and `installation.md` files currently start at `Status: pending
 
 ---
 
-## 4. Open Decisions Queued for Stage 0 — Gate 2
+## 4. Current Runtime Facts & Queued Future Decisions
 
-*(Wait until Stage 0 Gate 1 is signed off before deciding or executing these in [s00_foundations/installation.md](../src/harness_lab/stages/s00_foundations/installation.md).)*
-
-1. Confirm Python version (`3.12` vs. `3.13`) during `installation.md` Q&A.
-2. Inspect already-installed local `uv`, `ruff`, `ollama`, and `python3` binaries before installing anything.
-3. Choose initial local model tags within the 64 GB unified-memory co-residency budget (`workhorse` / `fast` / `bonsai-2.5` baseline).
+1. **Tooling Installed & Verified:** `uv 0.13.10`, Python `3.13.18` (`.python-version` pinned), `Ollama.app 0.40.18` (`REACHABLE`, `/v1` `ok`).
+2. **Deferred Model Pulls:** Local Ollama model pulls are deferred until needed (e.g., Stage 1 live experiments); `OLLAMA_MAX_LOADED_MODELS=3` and `OLLAMA_CONTEXT_LENGTH=32768` remain to be configured when running live local models.
+3. **Future-Stage Notes Recorded:** `embeddinggemma-2:270m` penciled in for Stage 5 `embed` (`s05_memory_lab/installation.md`), `apple/container` microVMs noted for Stage 3 ADR `004` (`s03_tools_guardrails/reading.md`), and `tev1` noted as the concrete Ollama alternative for `tinyjev` (`models.md`).
 
 ---
 
@@ -97,4 +95,4 @@ All `reading.md` and `installation.md` files currently start at `Status: pending
 
 **Or paste the full explicit prompt:**
 
-> Let's resume our `agentic-playground` course from `docs/session-handoff.md` and `docs/progress.md`. Please read `docs/session-handoff.md`, `docs/progress.md`, `COURSE.md`, and `AGENTS.md`, activate the `stage-runner` skill, and start **Stage 0 — Gate 1** using `src/harness_lab/stages/s00_foundations/README.md` and `src/harness_lab/stages/s00_foundations/reading.md`. Do **not** run any installations or write code yet — present the Stage 0 reading materials and focus questions so we can discuss them first.
+> Let's resume our `agentic-playground` course from `docs/session-handoff.md` and `docs/progress.md`. Please read `docs/session-handoff.md`, `docs/progress.md`, `COURSE.md`, and `AGENTS.md`, activate the `stage-runner` skill, and start **Stage 1 — Gate 1** using `src/harness_lab/stages/s01_raw_vs_pydantic/README.md` and `src/harness_lab/stages/s01_raw_vs_pydantic/reading.md`. Do **not** run any installations or write code yet — present the Stage 1 reading materials and focus questions so we can discuss them first.

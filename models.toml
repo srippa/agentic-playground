@@ -1,0 +1,121 @@
+# Declarative model profiles & 64 GB Apple Silicon hardware budget for agentic-playground.
+# Model rationale, alternatives, and live evaluation log: see models.md
+# Cloud profiles are disabled by default (enabled = false, is_cloud = true) to prevent accidental spend.
+
+default_profile = "workhorse"
+
+[hardware]
+unified_memory_gb = 64.0
+safe_wired_ceiling_gb = 46.0
+max_loaded_models = 3
+coresident_roles = ["workhorse", "fast", "embed"]
+
+[profiles.workhorse]
+role = "workhorse"
+provider = "ollama"
+base_url = "http://localhost:11434/v1"
+native_base_url = "http://localhost:11434"
+model = "qwen3.8:27b"
+api_style = "openai_compat"
+num_ctx = 32768
+keep_alive = "30m"
+temperature = 0.1
+est_ram_gb = 22.0
+is_cloud = false
+enabled = true
+
+[profiles."bonsai-2.5"]
+role = "bonsai-2.5"
+provider = "lmstudio"
+base_url = "http://localhost:1234/v1"
+model = "prism-ml/Ternary-Bonsai-2.5-27B-mlx-2bit"
+api_style = "openai_compat"
+num_ctx = 32768
+keep_alive = "15m"
+temperature = 0.1
+est_ram_gb = 6.5
+is_cloud = false
+enabled = true
+
+[profiles."alt-family"]
+role = "alt-family"
+provider = "ollama"
+base_url = "http://localhost:11434/v1"
+native_base_url = "http://localhost:11434"
+model = "inkling-2-mini"
+api_style = "openai_compat"
+num_ctx = 32768
+keep_alive = "15m"
+temperature = 0.1
+est_ram_gb = 19.0
+is_cloud = false
+enabled = true
+
+[profiles.fast]
+role = "fast"
+provider = "ollama"
+base_url = "http://localhost:11434/v1"
+native_base_url = "http://localhost:11434"
+model = "qwen3.5:9b"
+api_style = "openai_compat"
+num_ctx = 16384
+keep_alive = "30m"
+temperature = 0.1
+est_ram_gb = 6.5
+is_cloud = false
+enabled = true
+
+[profiles.chaos]
+role = "chaos"
+provider = "ollama"
+base_url = "http://localhost:11434/v1"
+native_base_url = "http://localhost:11434"
+model = "qwen3:4b"
+api_style = "openai_compat"
+num_ctx = 16384
+keep_alive = "10m"
+temperature = 0.2
+est_ram_gb = 3.5
+is_cloud = false
+enabled = true
+
+[profiles.decision]
+role = "decision"
+provider = "ollama"
+base_url = "http://localhost:11434/v1"
+native_base_url = "http://localhost:11434"
+model = "tinyjev"
+api_style = "openai_compat"
+num_ctx = 8192
+keep_alive = "15m"
+temperature = 0.0
+est_ram_gb = 2.5
+is_cloud = false
+enabled = true
+
+[profiles.embed]
+role = "embed"
+provider = "ollama"
+base_url = "http://localhost:11434/v1"
+native_base_url = "http://localhost:11434"
+model = "embeddinggemma-2:270m"
+api_style = "ollama_native"
+num_ctx = 8192
+keep_alive = "30m"
+temperature = 0.0
+est_ram_gb = 0.5
+is_cloud = false
+enabled = true
+
+[profiles.oracle]
+role = "oracle"
+provider = "cloud"
+base_url = "https://api.openai.com/v1"
+model = "gpt-5"
+api_style = "openai_compat"
+num_ctx = 32768
+keep_alive = "0s"
+temperature = 0.1
+est_ram_gb = 0.0
+is_cloud = true
+enabled = false

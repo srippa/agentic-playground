@@ -5,7 +5,7 @@ Short (under 1 page) records capturing every meaningful design choice across Sta
 **Rule:** The coding agent drafts `docs/decisions/NNN-short-title.md` with `Status: proposed`. **Only the project owner marks a record `accepted`.**
 
 ## Index
-- *(None yet — Stage 0 decisions will start at `001-...`)*
+- [001-runtime-and-wire-tap.md](./001-runtime-and-wire-tap.md) — Local 64 GB Runtime Strategy & Wire-Tap Transport (`Status: accepted`)
 
 ## Template (`NNN-short-title.md`)
 

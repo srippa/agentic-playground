@@ -14,6 +14,7 @@
    - PydanticAI Testing (`TestModel`, `FunctionModel`): [https://ai.pydantic.dev/testing/](https://ai.pydantic.dev/testing/)
 3. **Indirect Prompt Injection & Sandbox Threat Models**
    - Simon Willison on Prompt Injection: [https://simonwillison.net/tags/prompt-injection/](https://simonwillison.net/tags/prompt-injection/)
+   - Apple Container (macOS Virtualization.framework per-container Linux microVMs): [https://github.com/apple/container](https://github.com/apple/container)
    - Workspace Reference: `sandbox_data/AGENTS.md`
 
 ---
@@ -33,6 +34,7 @@
 
 - **Open Questions:**
 - **Key Takeaways:**
+  - *Defense-in-Depth Sandbox Architecture (for ADR `004-tool-safety-and-hitl.md`):* Stage 0–6 narrow tools use Layer 1 application containment (`core/sandbox.py` resolved-path checks + no `eval()`/`exec()`/`shell=True`) plus Stage 3 HITL approval (`DeferredToolRequests`), which stays fast and local-runtime-friendly. If an agent is ever granted open-ended arbitrary code/`bash` execution, upgrade to hardware-isolated containers—specifically **`apple/container`** ([github.com/apple/container](https://github.com/apple/container)) on Apple Silicon macOS, which runs each OCI container inside its own lightweight Linux microVM via `Virtualization.framework` (combining container UX with per-container kernel isolation) while still keeping Layer 1 guards inside the mounted workspace.
 
 ---
 
