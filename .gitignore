@@ -1,0 +1,23 @@
+# Secrets & environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Lab runtime outputs & scratch artifacts
+traces/
+sandbox_data/.tool_outputs/
+sandbox_data/*.db
+sandbox_data/*.sqlite*
+benchmarks/results/
+benchmarks/leaderboard.db
+
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.DS_Store

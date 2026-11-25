@@ -1,0 +1,30 @@
+{
+  "workspace-safety-gate": {
+    "PreToolUse": [
+      {
+        "matcher": "run_command|write_file|edit_file|read_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ./hooks/safety_gate.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "post-edit-guard": {
+    "PostToolUse": [
+      {
+        "matcher": "write_file|edit_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ./hooks/post_edit_guard.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
