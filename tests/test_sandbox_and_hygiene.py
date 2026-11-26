@@ -132,16 +132,28 @@ def test_gitignore_covers_lab_runtime_artifacts() -> None:
         assert required in lines
 
 
-def test_all_stage0_src_track_a_and_safety_ast_hygiene() -> None:
-    py_files = sorted((REPO_ROOT / "src" / "harness_lab").rglob("*.py"))
+def _is_track_a_module(rel_path: Path) -> bool:
+    posix = rel_path.as_posix()
+    if posix in {"__init__.py", "config.py", "cli.py"}:
+        return True
+    if posix.startswith(("core/", "stages/s00_foundations/")):
+        return True
+    return rel_path.name.startswith("track_a_")
+
+
+def test_track_a_isolation_and_safety_ast_hygiene() -> None:
+    src_root = REPO_ROOT / "src" / "harness_lab"
+    py_files = sorted(src_root.rglob("*.py"))
     assert py_files
     for py_file in py_files:
+        rel_path = py_file.relative_to(src_root)
+        enforce_no_pydantic_ai = _is_track_a_module(rel_path)
         tree = ast.parse(py_file.read_text(encoding="utf-8"), filename=str(py_file))
         for node in ast.walk(tree):
-            if isinstance(node, ast.Import):
+            if enforce_no_pydantic_ai and isinstance(node, ast.Import):
                 for alias in node.names:
                     assert not alias.name.startswith("pydantic_ai"), str(py_file)
-            elif isinstance(node, ast.ImportFrom) and node.module:
+            elif enforce_no_pydantic_ai and isinstance(node, ast.ImportFrom) and node.module:
                 assert not node.module.startswith("pydantic_ai"), str(py_file)
             elif isinstance(node, ast.Call):
                 if isinstance(node.func, ast.Name) and node.func.id in {"eval", "exec"}:

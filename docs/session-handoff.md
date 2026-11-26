@@ -1,9 +1,9 @@
 # Session Handoff — Resume Course in a New Antigravity Conversation
 
-- **Last Updated:** 2026-11-25
+- **Last Updated:** 2026-11-26
 - **Workspace:** `agentic-playground` (repository root)
-- **Active Cursor:** `Stage 1 → Gate 1` ([s01_raw_vs_pydantic/reading.md](../src/harness_lab/stages/s01_raw_vs_pydantic/reading.md))
-- **Current Build State:** **Stage 0 is complete and verified.** Installed `uv 0.13.10`, Python `3.13.18`, `Ollama.app 0.40.18` (live-verified `REACHABLE` via `uv run lab doctor --xray`; model pulls intentionally deferred until needed), plus `httpx`, `pydantic`, `rich`, `pytest`, and `ruff`. Implemented `pyproject.toml`, `models.toml`, `models.md`, `config.py`, `cli.py`, `core/tracer.py`, `core/wire_tap.py`, `core/sandbox.py`, and `s00_foundations/run.py` (`31 passed, 1 deselected`, `ruff` clean). ADR [001-runtime-and-wire-tap.md](./decisions/001-runtime-and-wire-tap.md) is `accepted`.
+- **Active Cursor:** `Stage 2 → Gate 1` ([s02_manual_vs_iter/reading.md](../src/harness_lab/stages/s02_manual_vs_iter/reading.md))
+- **Current Build State:** **Stages 0 and 1 are complete and verified (`53 passed, 1 deselected`, `ruff` clean).** Installed `uv 0.13.10`, Python `3.13.18`, `Ollama.app 0.40.18` (live-verified `REACHABLE`; model pulls deferred), `pydantic-ai==2.75.0`, `httpx`, `pydantic`, `rich`, `pytest`, and `ruff`. Implemented Stage 0 core (`config.py`, `cli.py`, `core/tracer.py`, `core/wire_tap.py`, `core/sandbox.py`, `s00_foundations/run.py`) and Stage 1 (`track_a_raw.py`, `track_b_pydantic.py`, `s01_raw_vs_pydantic/run.py`, `lab stage 1 --xray` comparator). ADRs [001-runtime-and-wire-tap.md](./decisions/001-runtime-and-wire-tap.md) and [002-model-config-and-thinking.md](./decisions/002-model-config-and-thinking.md) are both `accepted`.
 
 ---
 
@@ -95,4 +95,4 @@ All `reading.md` and `installation.md` files currently start at `Status: pending
 
 **Or paste the full explicit prompt:**
 
-> Let's resume our `agentic-playground` course from `docs/session-handoff.md` and `docs/progress.md`. Please read `docs/session-handoff.md`, `docs/progress.md`, `COURSE.md`, and `AGENTS.md`, activate the `stage-runner` skill, and start **Stage 1 — Gate 1** using `src/harness_lab/stages/s01_raw_vs_pydantic/README.md` and `src/harness_lab/stages/s01_raw_vs_pydantic/reading.md`. Do **not** run any installations or write code yet — present the Stage 1 reading materials and focus questions so we can discuss them first.
+> Let's resume our `agentic-playground` course from `docs/session-handoff.md` and `docs/progress.md`. Please read `docs/session-handoff.md`, `docs/progress.md`, `COURSE.md`, and `AGENTS.md`, activate the `stage-runner` skill, and start **Stage 2 — Gate 1** using `src/harness_lab/stages/s02_manual_vs_iter/README.md` and `src/harness_lab/stages/s02_manual_vs_iter/reading.md`. Do **not** run any installations or write code yet — present the Stage 2 reading materials and focus questions so we can discuss them first.

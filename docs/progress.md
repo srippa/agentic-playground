@@ -1,10 +1,10 @@
 # Lab Progress (`agentic-playground`)
 
-**Current Stage:** Stage 1 — Raw HTTP vs. PydanticAI Model (`Gate 1: Pre-Reading Ready`)
-**Active Cursor:** `Stage 1 → Gate 1` ([s01_raw_vs_pydantic/reading.md](../src/harness_lab/stages/s01_raw_vs_pydantic/reading.md))
+**Current Stage:** Stage 2 — Manual ReAct vs. Agent.iter() (`Gate 1: Pre-Reading Ready`)
+**Active Cursor:** `Stage 2 → Gate 1` ([s02_manual_vs_iter/reading.md](../src/harness_lab/stages/s02_manual_vs_iter/reading.md))
 **Resume in a New Conversation:** [docs/session-handoff.md](./session-handoff.md)
 **Hardware Target:** MacBook Pro Apple Silicon (64 GB Unified Memory)
-**Last Updated:** 2026-11-25
+**Last Updated:** 2026-11-26
 
 ## Completed
 - Architecture & curriculum plan finalized in `agentic-playground-agy.md` (Hybrid Lab: Pure Harness Lab Stages 0–5 + Multi-Agent Trip-Planner Mini-Capstone & Model Arena in Stage 6).
@@ -22,21 +22,25 @@
   - Tooling & env: `uv 0.13.10`, Python `3.13.18`, `Ollama.app 0.40.18` (model pulls deferred), `pyproject.toml`, `models.toml`, and living [models.md](../models.md) roster rationale.
   - Core infrastructure (Track A framework-free): `config.py`, `cli.py` (`lab profiles`, `lab doctor`, `lab version`), `core/tracer.py`, `core/wire_tap.py`, `core/sandbox.py`, and `s00_foundations/run.py`.
   - Gate 4 drills & ADR: `lab profiles` (`OK` vs. `OVER BUDGET` break-it), `lab doctor --xray` (redacted `traces/*.jsonl`), live `Ollama 0.40.18` verified via `uv run lab doctor --xray` (`traces/doctor-20261125T155906Z.jsonl`), and `docs/decisions/001-runtime-and-wire-tap.md` (`Status: accepted`).
+- **Stage 1 — Raw HTTP vs. PydanticAI Model (`s01_raw_vs_pydantic`) implemented & verified offline (`53 passed, 1 deselected`, `ruff` clean):**
+  - Dependencies: installed full `pydantic-ai==2.75.0` meta-package (Gate 2 approved; Ollama model pulls deferred).
+  - Parts `1.1`–`1.3`: `track_a_raw.py` (framework-free `/v1/chat/completions`, SSE parser, `<think>` extraction, `cached_tokens`/`reasoning_tokens` usage), `track_b_pydantic.py` (`OpenAIChatModel`, `OllamaProvider`/`OpenAIProvider`, `debounce_by=None`, `ModelRequest`/`ModelResponse` summaries), and `run.py` + `lab stage 1 --xray` comparator.
+  - Gate 4 drills & ADR: `--offline --stream --xray` (`fast`) and `--temperature`/`--reasoning-effort` (`bonsai-2.5`) verified redacted `traces/s01-*.jsonl` and exposed Track A stripping `<think>` vs. Track B re-sending `ThinkingPart` on Turn 2; [002-model-config-and-thinking.md](./decisions/002-model-config-and-thinking.md) (`Status: accepted`).
 
 ## Stage × Gate × Parts Progress Matrix
 
 | Stage | Directory | Gate 1 (`reading.md`) | Gate 2 (`installation.md`) | Gate 3 (Coding Parts) | Gate 4 (Drills, ADR & Progress) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Stage 0** | [s00_foundations](../src/harness_lab/stages/s00_foundations/README.md) | ✅ Done | ✅ Done (models deferred) | `0.1` ✅ `0.2` ✅ `0.3` ✅ `0.4` ✅ | `001-runtime-and-wire-tap.md` ✅ Accepted |
-| **Stage 1** | [s01_raw_vs_pydantic](../src/harness_lab/stages/s01_raw_vs_pydantic/README.md) | ⏳ Pending | ⬜ Not started | `1.1` ⬜ `1.2` ⬜ `1.3` ⬜ | `002-model-config-and-thinking.md` ⬜ |
-| **Stage 2** | [s02_manual_vs_iter](../src/harness_lab/stages/s02_manual_vs_iter/README.md) | ⬜ Not started | ⬜ Not started | `2.1` ⬜ `2.2` ⬜ `2.3` ⬜ | `003-loop-and-structured-output.md` ⬜ |
+| **Stage 1** | [s01_raw_vs_pydantic](../src/harness_lab/stages/s01_raw_vs_pydantic/README.md) | ✅ Done | ✅ Done (models deferred) | `1.1` ✅ `1.2` ✅ `1.3` ✅ | `002-model-config-and-thinking.md` ✅ Accepted |
+| **Stage 2** | [s02_manual_vs_iter](../src/harness_lab/stages/s02_manual_vs_iter/README.md) | ⏳ Pending | ⬜ Not started | `2.1` ⬜ `2.2` ⬜ `2.3` ⬜ | `003-loop-and-structured-output.md` ⬜ |
 | **Stage 3** | [s03_tools_guardrails](../src/harness_lab/stages/s03_tools_guardrails/README.md) | ⬜ Not started | ⬜ Not started | `3.1` ⬜ `3.2` ⬜ `3.3` ⬜ `3.4` ⬜ | `004-tool-safety-and-hitl.md` ⬜ |
 | **Stage 4** | [s04_mcp_glassbox](../src/harness_lab/stages/s04_mcp_glassbox/README.md) | ⬜ Not started | ⬜ Not started | `4.1` ⬜ `4.2` ⬜ `4.3` ⬜ | `005-mcp-architecture-and-transport.md` ⬜ |
 | **Stage 5** | [s05_memory_lab](../src/harness_lab/stages/s05_memory_lab/README.md) | ⬜ Not started | ⬜ Not started | `5.1` ⬜ `5.2` ⬜ `5.3` ⬜ | `006-memory-and-compaction.md` ⬜ |
 | **Stage 6** | [s06_observatory](../src/harness_lab/stages/s06_observatory/README.md) | ⬜ Not started | ⬜ Not started | `6.1` ⬜ `6.2` ⬜ `6.3` ⬜ `6.4` ⬜ `6.5` ⬜ | `007-eval-gatekeeper-and-capstone.md` ⬜ |
 
 ## Active Stage & Next Action
-- **Next:** Start **Stage 1 — Gate 1** by reviewing [src/harness_lab/stages/s01_raw_vs_pydantic/reading.md](../src/harness_lab/stages/s01_raw_vs_pydantic/reading.md) (concept chat & focus questions). Do **not** run Stage 1 installations (`pydantic-ai`) or write Stage 1 code until Gate 1 sign-off and Gate 2 approval are completed.
+- **Next:** Start **Stage 2 — Gate 1** by reviewing [src/harness_lab/stages/s02_manual_vs_iter/reading.md](../src/harness_lab/stages/s02_manual_vs_iter/reading.md) (concept chat & focus questions). Do **not** run Stage 2 installations or write Stage 2 code until Gate 1 sign-off and Gate 2 approval are completed.
 
 ## Open Questions
 - **Resolved:** Python `3.13` (`3.13.18`) chosen and pinned; `uv 0.13.10`, `Ollama.app 0.40.18`, and Stage 0 Python packages installed.

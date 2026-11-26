@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import os
 import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+import httpx
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -80,6 +82,63 @@ def build_parser() -> argparse.ArgumentParser:
         help="Run a curriculum stage demo (implemented across Stages 0-6)",
     )
     stage_parser.add_argument("stage_num", type=int, help="Stage number (0-6)")
+    stage_parser.add_argument(
+        "--config",
+        type=Path,
+        default=None,
+        help="Optional path to a models.toml file",
+    )
+    stage_parser.add_argument(
+        "--profile",
+        type=str,
+        default=None,
+        help="Model profile from models.toml (e.g. workhorse, fast, bonsai-2.5)",
+    )
+    stage_parser.add_argument(
+        "--xray",
+        action="store_true",
+        help="Show raw wire payloads, SSE chunks, and PydanticAI ModelMessage anatomy",
+    )
+    stage_parser.add_argument(
+        "--stream",
+        action="store_true",
+        help="Use SSE streaming (stream=True) instead of one-shot JSON",
+    )
+    stage_parser.add_argument(
+        "--offline",
+        action="store_true",
+        help="Run against a deterministic offline mock transport instead of a live server",
+    )
+    stage_parser.add_argument(
+        "--temperature",
+        type=float,
+        default=None,
+        help="Override profile temperature for this stage run",
+    )
+    stage_parser.add_argument(
+        "--reasoning-effort",
+        choices=("low", "medium", "high"),
+        default=None,
+        help="Optional reasoning_effort passed on the wire",
+    )
+    stage_parser.add_argument(
+        "--prompt",
+        type=str,
+        default=None,
+        help="Override Turn 1 prompt",
+    )
+    stage_parser.add_argument(
+        "--followup",
+        type=str,
+        default=None,
+        help="Override Turn 2 follow-up prompt",
+    )
+    stage_parser.add_argument(
+        "--traces-dir",
+        type=Path,
+        default=Path("traces"),
+        help="Directory for redacted JSONL wire traces",
+    )
     return parser
 
 
@@ -178,9 +237,45 @@ def main(argv: Sequence[str] | None = None, *, console: Console | None = None) -
         return 0
 
     if args.command == "stage":
+        if args.stage_num == 1:
+            os.environ.setdefault("PYDANTIC_AI_NO_BANNER", "1")
+            from harness_lab.stages.s01_raw_vs_pydantic.run import (
+                DEFAULT_TURN1_PROMPT,
+                DEFAULT_TURN2_PROMPT,
+                render_stage1_report,
+                run_stage1,
+            )
+
+            try:
+                config = load_config(args.config)
+                report = asyncio.run(
+                    run_stage1(
+                        config,
+                        profile_name=args.profile,
+                        stream=args.stream,
+                        offline=args.offline,
+                        temperature=args.temperature,
+                        reasoning_effort=args.reasoning_effort,
+                        turn1_prompt=args.prompt or DEFAULT_TURN1_PROMPT,
+                        turn2_prompt=args.followup or DEFAULT_TURN2_PROMPT,
+                        traces_dir=args.traces_dir,
+                    )
+                )
+            except (ConfigError, ValueError) as exc:
+                out.print(f"[bold red]Config/Stage error:[/bold red] {exc}")
+                return 2
+            except httpx.HTTPError as exc:
+                out.print(
+                    f"[bold red]Runtime HTTP error:[/bold red] {exc}\n"
+                    "[yellow]Hint:[/yellow] Check `uv run lab doctor` or retry with `--offline`."
+                )
+                return 1
+            render_stage1_report(report, out, xray=args.xray)
+            return 0
+
         out.print(
-            f"[yellow]lab stage {args.stage_num}[/yellow] runners will be wired starting in "
-            "Stage 0/1 (Gate 3)."
+            f"[yellow]lab stage {args.stage_num}[/yellow] runner is not implemented yet "
+            "(implemented: Stage 1)."
         )
         return 0
 

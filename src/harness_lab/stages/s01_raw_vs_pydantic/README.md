@@ -27,9 +27,9 @@ Do **not** implement ahead. Each part follows **Plan First → Implement & Run O
 
 | Part | Scope | Key Deliverables | Status |
 | :--- | :--- | :--- | :--- |
-| **Part 1.1** | Track A Raw HTTP Chat & SSE Parser | Framework-free `httpx` `/v1/chat/completions` client supporting `stream=True` / `stream=False`, SSE chunk parsing, `<think>` extraction, and raw JSON dump | ⬜ Not started |
-| **Part 1.2** | Track B PydanticAI Single-Turn Adapter | `pydantic-ai` `Agent` wired to local OpenAI-compatible endpoint (`OpenAIChatModel` / `OpenAIProvider`), exposing `ModelRequest`, `ModelResponse`, `ThinkingPart`, and `TextPart` | ⬜ Not started |
-| **Part 1.3** | Side-by-Side `--xray` Comparator | `uv run lab stage 1 --xray` runner diffing raw wire payloads against PydanticAI's normalized `ModelMessage` objects across `workhorse` / `fast` / `bonsai-2.5` | ⬜ Not started |
+| **Part 1.1** | Track A Raw HTTP Chat & SSE Parser | Framework-free `httpx` `/v1/chat/completions` client supporting `stream=True` / `stream=False`, SSE chunk parsing, `<think>` extraction, and raw JSON dump | ✅ Done |
+| **Part 1.2** | Track B PydanticAI Single-Turn Adapter | `pydantic-ai` `Agent` wired to local OpenAI-compatible endpoint (`OpenAIChatModel` / `OpenAIProvider`), exposing `ModelRequest`, `ModelResponse`, `ThinkingPart`, and `TextPart` | ✅ Done |
+| **Part 1.3** | Side-by-Side `--xray` Comparator | `uv run lab stage 1 --xray` runner diffing raw wire payloads against PydanticAI's normalized `ModelMessage` objects across `workhorse` / `fast` / `bonsai-2.5` | ✅ Done |
 
 ---
 

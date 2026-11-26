@@ -6,6 +6,7 @@ Short (under 1 page) records capturing every meaningful design choice across Sta
 
 ## Index
 - [001-runtime-and-wire-tap.md](./001-runtime-and-wire-tap.md) — Local 64 GB Runtime Strategy & Wire-Tap Transport (`Status: accepted`)
+- [002-model-config-and-thinking.md](./002-model-config-and-thinking.md) — Model Config, Thinking Separation & Wire Comparator (`Status: accepted`)
 
 ## Template (`NNN-short-title.md`)
 
